@@ -3,12 +3,14 @@
 <%@page import="com.mem.model.MemService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <%
-System.out.println("Index.jsp!!!");
+		String DID = request.getParameter("DID");
+		System.out.println("DID : " + DID);
+		request.setAttribute("DID", DID);
     MemService memSvc = new MemService();
 		List<MemVO> list = memSvc.getAll();
-		System.out.println("Index.jsp OK!!!");
 %>
     
     
@@ -185,7 +187,7 @@ System.out.println("Index.jsp!!!");
 			
 			<div class="login-form">
 				<div class="sign-in-htm">
-				<form action="">
+				<form METHOD="post" action="<%=request.getContextPath()%>/emp/emp.do">
 					<div class="group">
 						<label for="user" class="label">帳號</label>
 						<input id="user" type="text" class="input">
@@ -207,7 +209,8 @@ System.out.println("Index.jsp!!!");
 						</label>
 					</div>
 					
-					<input type="hidden" name="DID" value="">
+					<input type="hidden" name="DID" value="<%=request.getAttribute("DID") %>" id="DIDvalue">
+					<input type="hidden" name="action" value="getOne_For_Display">
 
 					<div class="group">
 						<button class="button" id="loginBtn">登入</button>
@@ -250,9 +253,10 @@ System.out.println("Index.jsp!!!");
 						<label for="tab-1">已有帳號?</a>
 					</div>
 				</form>
-				</div>
+				</div>				
 			</div>
 		</div>
+		
 	</div>
 	
 	<script>
@@ -264,7 +268,11 @@ System.out.println("Index.jsp!!!");
     });
 		
 		$("#loginBtn").click(function(){
+			console.log("loginBtn click!");
 			window.location.href = "./AddValue/AddValue.jsp";
 		});
+		
+		console.log("hidden value :" + $("#DIDvalue").val());
+
 	</script>
 </body>
