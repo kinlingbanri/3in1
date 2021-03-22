@@ -11,8 +11,7 @@
 		request.setAttribute("DID", DID);
     MemService memSvc = new MemService();
 		List<MemVO> list = memSvc.getAll();
-%>
-    
+%>    
     
 <!DOCTYPE html>
 <html lang="en">
@@ -175,8 +174,9 @@
 			text-align:center;
 		}
 	</style>
-	<script src="./js/jquery-3.3.1.js"></script>
-	<script src="./js/nicescroll.js"></script>
+<!-- 	<script src="./js/jquery-3.2.1.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!-- 	<script src="./js/nicescroll.js"></script> -->
 </head>
 
 <body id="body">
@@ -187,14 +187,13 @@
 			
 			<div class="login-form">
 				<div class="sign-in-htm">
-				<form METHOD="post" action="<%=request.getContextPath()%>/emp/emp.do">
 					<div class="group">
 						<label for="user" class="label">帳號</label>
-						<input id="user" type="text" class="input">
+						<input id="username" type="text" class="input" name="username">
 					</div>
 					<div class="group">
 						<label for="pass" class="label">密碼</label>
-						<input id="pass" type="password" class="input" data-type="password">
+						<input id="password" type="password" class="input" data-type="password" name="password">
 					</div>
 					
 					<!--
@@ -209,7 +208,7 @@
 						</label>
 					</div>
 					
-					<input type="hidden" name="DID" value="<%=request.getAttribute("DID") %>" id="DIDvalue">
+					<input type="hidden" name="DID" value="<%=request.getAttribute("DID") %>" id="DID">
 					<input type="hidden" name="action" value="getOne_For_Display">
 
 					<div class="group">
@@ -220,11 +219,9 @@
 						<a href="#forgot">忘記密碼?</a>
 					</div>
 				</div>
-				</form>
 				
 				
 				<div class="sign-up-htm">
-				<form action="">
 					<div class="group">
 						<label for="user" class="label">帳號</label>
 						<input id="user" type="text" class="input">
@@ -252,7 +249,6 @@
 					<div class="foot-lnk">
 						<label for="tab-1">已有帳號?</a>
 					</div>
-				</form>
 				</div>				
 			</div>
 		</div>
@@ -260,19 +256,47 @@
 	</div>
 	
 	<script>
-		$("#body").niceScroll({
-        cursorcolor: "#0026BF",
-        cursorborder: "1px solid #30BAFF", 
-        autohidemode: "hidden",
-        cursorwidth: "10px"
-    });
+// 		$("#body").niceScroll({
+//         cursorcolor: "#0026BF",
+//         cursorborder: "1px solid #30BAFF", 
+//         autohidemode: "hidden",
+//         cursorwidth: "10px"
+//     });
 		
 		$("#loginBtn").click(function(){
-			console.log("loginBtn click!");
-			window.location.href = "./AddValue/AddValue.jsp";
-		});
-		
-		console.log("hidden value :" + $("#DIDvalue").val());
+			var username = $("#username").val(); //獲取input裡的值
+			var password = $("#password").val();
+			var DID = $("#DID").val();
+			
+			console.log("username : " + username);
+			console.log("password : " + password);
+			console.log("DID : " + DID);
+			
+			$.ajax({
+			    type:"POST",
+			    url:"/3in1/mem/mem.do",
+			    data:{
+			    	username : username,
+			    	password : password,
+			    	DID : DID
+			    },
+			    success:function (result) {
+			    	console.log("result : " + result);
+			        if("OK"==result){
+			        		console.log("登入成功！");
+			            window.location.href = "./AddValue/AddValue.jsp";
+			        }else{
+			        		console.log("使用者名稱或密碼錯誤");
+			            //$("#password").val("");  //將密碼input清空
+			            //$("#password").focus();  //將游標定位到密碼input
+			        }
+			    },
+			    error:function (err) {
+			        //alert("系統錯誤-loginPage.jsp-ajax");
+			    }
+				});
+			});
+
 
 	</script>
 </body>

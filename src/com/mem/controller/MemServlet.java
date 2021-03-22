@@ -1,6 +1,7 @@
 package com.mem.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,10 +20,20 @@ public class MemServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		String DID = req.getParameter("DID");
 		
+		System.out.println("username : " + username);
+		System.out.println("password : " + password );
+		System.out.println("DID : " + DID );
 		
-		
-		super.doPost(req, resp);
+		PrintWriter out = resp.getWriter();
+		out.print("OK");
+		out.flush();
+		out.close();
+		//out.close();
+		//req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 
 	
