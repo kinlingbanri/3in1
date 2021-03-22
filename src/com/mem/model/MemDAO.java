@@ -8,11 +8,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemJDBCDAO implements MemDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/threeinone";
-	String userid = "root";
-	String passwd = "34182958";
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class MemDAO implements MemDAO_interface {
+	
+	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/threeinone");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String GET_ALL_STMT = 
 			"SELECT username, email, password, point FROM mem order by username";
@@ -25,16 +37,13 @@ public class MemJDBCDAO implements MemDAO_interface {
 	private static final String DELETE = 
 			"DELETE FROM mem where username = ?";
 
-
 	@Override
 	public void insert(MemVO memVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, memVO.getUsername());
@@ -44,10 +53,6 @@ public class MemJDBCDAO implements MemDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -73,13 +78,12 @@ public class MemJDBCDAO implements MemDAO_interface {
 
 	@Override
 	public void update(MemVO memVO) {
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, memVO.getEmail());
@@ -90,10 +94,6 @@ public class MemJDBCDAO implements MemDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -122,9 +122,7 @@ public class MemJDBCDAO implements MemDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setString(1, username);
@@ -132,10 +130,6 @@ public class MemJDBCDAO implements MemDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -156,8 +150,9 @@ public class MemJDBCDAO implements MemDAO_interface {
 				}
 			}
 		}
+		
 	}
-	
+
 	@Override
 	public MemVO findByPrimaryKey(String username) {
 		MemVO memVO = null;
@@ -167,8 +162,7 @@ public class MemJDBCDAO implements MemDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, username);
@@ -185,10 +179,6 @@ public class MemJDBCDAO implements MemDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -218,20 +208,17 @@ public class MemJDBCDAO implements MemDAO_interface {
 		}
 		return memVO;
 	}
-	
+
 	@Override
 	public List<MemVO> getAll() {
 		List<MemVO> list = new ArrayList<MemVO>();
-		MemVO memVO = null;
-		
+		MemVO memVO = null;		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -246,10 +233,6 @@ public class MemJDBCDAO implements MemDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -278,57 +261,6 @@ public class MemJDBCDAO implements MemDAO_interface {
 			}
 		}
 		return list;
-	}
-
-	public static void main(String[] args) {
-		MemJDBCDAO dao = new MemJDBCDAO();
-		
-		/*
-		//Add
-		MemVO memVO = new MemVO();
-		memVO.setUsername("金城舞");
-		memVO.setEmail("Kim@hotmail.com");
-		memVO.setPassword("Test1234");
-		memVO.setPoint(3200);
-		dao.insert(memVO);
-		*/
-		
-		/*		
-		//Update
-		MemVO memVO = new MemVO();
-		memVO.setUsername("Kim");
-		memVO.setEmail("Kim2@hotmail.com");
-		memVO.setPassword("1234");
-		memVO.setPoint(1300);
-		dao.update(memVO);
-		*/
-		
-		/*
-		// Delete
-		dao.delete("金城舞");
-		*/
-		
-		/*
-		// Query One
-		MemVO memVO = dao.findByPrimaryKey("Van007");
-		System.out.print(memVO.getUsername() + ",");
-		System.out.print(memVO.getEmail() + ",");
-		System.out.print(memVO.getPassword() + ",");
-		System.out.print(memVO.getPoint());
-		System.out.println();
-		*/
-		
-		
-		// Query All
-		List<MemVO> list = dao.getAll();
-		for (MemVO mem : list) {
-			System.out.print(mem.getUsername() + ",");
-			System.out.print(mem.getEmail() + ",");
-			System.out.print(mem.getPassword() + ",");
-			System.out.print(mem.getPoint());
-			System.out.println();
-		}
-		
 	}
 
 }
