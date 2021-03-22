@@ -1,7 +1,15 @@
+<%@page import="com.mem.model.MemVO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.mem.model.MemService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-
+<%
+System.out.println("Index.jsp!!!");
+    MemService memSvc = new MemService();
+		List<MemVO> list = memSvc.getAll();
+		System.out.println("Index.jsp OK!!!");
+%>
     
     
 <!DOCTYPE html>
