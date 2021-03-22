@@ -1,12 +1,21 @@
 package com.mem.model;
 
-public class memVO implements java.io.Serializable {
+public class MemVO implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	private String email;
 	private String username;
 	private String password;
 	private Integer point;
 	
-	public memVO(String email, String username, String password, Integer point) {
+	
+	
+	public MemVO() {
+		super();
+	}
+
+	public MemVO(String email, String username, String password, Integer point) {
 		super();
 		this.email = email;
 		this.username = username;

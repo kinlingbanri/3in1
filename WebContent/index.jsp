@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+
+    
+    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -170,8 +174,10 @@
 		<div class="login-html">
 			<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">登入</label>
 			<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">註冊</label>
+			
 			<div class="login-form">
 				<div class="sign-in-htm">
+				<form action="">
 					<div class="group">
 						<label for="user" class="label">帳號</label>
 						<input id="user" type="text" class="input">
@@ -192,7 +198,8 @@
 							<input type="checkbox" name="showPwd" id="showPwd">顯示密碼
 						</label>
 					</div>
-
+					
+					<input type="hidden" name="DID" value="">
 
 					<div class="group">
 						<button class="button" id="loginBtn">登入</button>
@@ -202,7 +209,11 @@
 						<a href="#forgot">忘記密碼?</a>
 					</div>
 				</div>
+				</form>
+				
+				
 				<div class="sign-up-htm">
+				<form action="">
 					<div class="group">
 						<label for="user" class="label">帳號</label>
 						<input id="user" type="text" class="input">
@@ -230,6 +241,7 @@
 					<div class="foot-lnk">
 						<label for="tab-1">已有帳號?</a>
 					</div>
+				</form>
 				</div>
 			</div>
 		</div>
