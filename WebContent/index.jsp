@@ -228,18 +228,18 @@
 					</div>
 					<div class="group">
 						<label for="pass" class="label" style="font-size: 20px;">密碼</label>
-						<input id="registerPassword" type="password" class="input" style="margin-top: 6px; font-size: 16px;">
+						<input id="registerPassword" type="text" class="input" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					<div class="group">
 						<label for="pass" class="label" style="font-size: 20px;">再輸入一次密碼</label>
-						<input id="checkRegisterPassword" type="password" class="input" style="margin-top: 6px; font-size: 16px;">
+						<input id="checkRegisterPassword" type="text" class="input" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					<div class="group" style="margin-top: 24px;">
 						<button class="button" id="registerBtn" style="font-size:16px; font-weight:bold;">註冊</button>
 					</div>
 					<div class="hr"></div>
 					<div class="foot-lnk">
-						<label for="tab-1">已有帳號?</a>
+						<label for="tab-1">已有帳號?</label>
 					</div>
 				</div>				
 			</div>
@@ -251,14 +251,20 @@
 		$(function(){
 			$("#texLogintPwd").hide();
 			document.getElementById('checkboxPwd').checked = false;
-			document.getElementById("password").value = "";
-			document.getElementById("texLogintPwd").value = "";
+// 			document.getElementById("password").value = "";
+// 			document.getElementById("texLogintPwd").value = "";
 			$("#username").val("").css('color', '#aaa');
 			$("#password").val("").css('color', '#aaa');
 			$("#texLogintPwd").val("").css('color', '#aaa');
+
+			$("#registerUsername").val("").css('color', '#aaa');
+			$("#registerEmail").val("").css('color', '#aaa');
+			$("#checkRegisterEmail").val("").css('color', '#aaa');
+			$("#registerPassword").val("").css('color', '#aaa');
+			$("#checkRegisterPassword").val("").css('color', '#aaa');
 		});
 		
-		//確認帳號和密碼是否為空白,再提交後台驗證
+		//用於登入確認帳號和密碼是否為空白,再提交後台驗證
 		function loginValidate(){
 			var state = 0;
 			var username = $("#username").val();
@@ -311,7 +317,7 @@
 				this.value = "";
 				this.style.color = "#DDDDDD";
 			}
-		}		
+		}
 		document.getElementById('texLogintPwd').onfocus = function() {
 			if(this.style.color == "red"){
 				this.value = "";
@@ -369,6 +375,140 @@
 			}
 		});
 
+		
+		
+		//用於註冊確認帳號和密碼和EMAIL是否為空白,再提交後台
+		function registerValidate(){
+			var state = 0;
+			var emailState = 0;
+			var passwordState = 0;
+			var registerUsername = $("#registerUsername").val();
+			var registerEmail = $("#registerEmail").val();
+			var checkRegisterEmail = $("#checkRegisterEmail").val();
+			var registerPassword = $("#registerPassword").val();
+			var checkRegisterPassword = $("#checkRegisterPassword").val();
+			if(registerUsername == null || registerUsername == ""){
+				$("#registerUsername").val("帳號不能為空白!").css('color', 'red');
+				state = 1;
+			}
+			if(registerEmail == null || registerEmail == ""){
+				$("#registerEmail").val("Email不能為空白!").css('color', 'red').show();
+				state = 1;
+				emailState = 1;
+			}
+			if(checkRegisterEmail == null || checkRegisterEmail == ""){
+				$("#checkRegisterEmail").val("Email不能為空白!").css('color', 'red').show();
+				state = 1;
+				emailState = 1;
+			}
+			if(registerPassword == null || registerPassword == ""){
+				$("#registerPassword").val("密碼不能為空白!").css('color', 'red').show();
+				state = 1;
+				passwordState = 1;
+			}
+			if(checkRegisterPassword == null || checkRegisterPassword == ""){
+				$("#checkRegisterPassword").val("密碼不能為空白!").css('color', 'red').show();
+				state = 1;
+				passwordState = 1;
+			}
+			if(emailState == 0){
+				var mailformat = /^[^\[\]\(\)\\<>:;,@.]+[^\[\]\(\)\\<>:;,@]*@[a-z0-9A-Z]+(([.]?[a-z0-9A-Z]+)*[-]*)*[.]([a-z0-9A-Z]+[-]*)+$/g;
+				if(!registerEmail.match(mailformat)){
+					$("#registerEmail").val("Email格式錯誤!").css('color', 'red').show();
+				}else if($("#registerEmail").val() != $("#checkRegisterEmail").val()){
+					$("#checkRegisterEmail").val("Email不一致!").css('color', 'red').show();
+				}
+			}
+			if(passwordState == 0){
+				if($("#registerPassword").val() != $("#checkRegisterPassword").val()){
+					$("#checkRegisterPassword").val("Email不一致!").css('color', 'red').show();
+				}
+			}
+			
+			return state;
+		}
+		
+		//輸入前清空文字和恢復樣式
+		document.getElementById('registerUsername').onfocus = function() {
+			if(this.style.color == "red"){
+				this.value = "";
+				this.style.color = "#DDDDDD";
+			}
+		}
+		document.getElementById('registerEmail').onfocus = function() {
+			if(this.style.color == "red"){
+				this.value = "";
+				this.style.color = "#DDDDDD";
+			}
+		}
+		//輸入前清空文字和恢復樣式
+		document.getElementById('checkRegisterEmail').onfocus = function() {
+			if(this.style.color == "red"){
+				this.value = "";
+				this.style.color = "#DDDDDD";
+			}
+		}
+		document.getElementById('registerPassword').onfocus = function() {
+			if(this.style.color == "red"){
+				this.value = "";
+				this.style.color = "#DDDDDD";
+			}
+		}
+		document.getElementById('checkRegisterPassword').onfocus = function() {
+			if(this.style.color == "red"){
+				this.value = "";
+				this.style.color = "#DDDDDD";
+			}
+		}
+		
+		//如果先前驗證沒過,清除警示文字和恢復樣式
+		document.getElementById('registerUsername').onblur = function() {
+			document.getElementById('texLogintPwd').value = this.value;
+			console.log("password : " + password.value + " ; texLogintPwd : " + texLogintPwd.value);
+		}
+		
+		$("#registerBtn").click(function(){
+			var state = registerValidate();
+			console.log("register state : " + state);
+			if(state == 0){
+				var registerUsername = $("#registerUsername").val();
+				var registerEmail = $("#registerEmail").val();
+				var registerPassword = $("#registerPassword").val();
+				var DID = $("#DID").val();
+				
+// 				$.ajax({
+// 				    type: 'POST',                     //GET or POST
+// 				    url: "mem/mem.do",            //請求的頁面
+// 				    cache: false,                    //防止抓到快取的回應
+// 				    data: {      											//要傳送到頁面的參數
+// 				    	username : username,
+// 							password : password,
+// 							DID : DID
+// 				    },
+// 				    success: function (jsonObject) {         //當請求成功後此事件會被呼叫
+// 				    	console.log("jsonObject.state : "+ jsonObject.state);
+// 				    	var validateState = jsonObject.state;
+// 				    	if(validateState == "1"){
+// 								window.location.href = "./AddValue/AddValue.jsp";
+// 							}else if(validateState == "2"){
+// 	 							$("#username").val("無此帳號!").css('color', 'red');
+// 		 					}else if(validateState == "3"){
+// 	 							$("#password").hide();
+// 	 							$("#texLogintPwd").val("密碼錯誤!").css('color', 'red').show();
+// 	 							document.getElementById('checkboxPwd').checked = true;
+// 	 						}
+// 				    },
+// 				    error: function(e){
+// 				    	console.log("e: " + e);
+// 				    },            //當請求失敗後此事件會被呼叫
+// 				    statusCode: {                     //狀態碼處理
+// 				      404: function() {
+// 				        //alert("page not found");
+// 				      }
+// 				    }
+// 				});
+			}
+		});
 
 	</script>
 </body>
