@@ -15,12 +15,10 @@
     
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
   <title>三合一加值系統</title>
 	<link rel="shortcut icon" href="#" />
 	<style>
@@ -168,7 +166,7 @@
 
 		.hr{
 			height:2px;
-			margin:60px 0 50px 0;
+			margin:50px 0 40px 0;
 			background:rgba(255,255,255,.2);
 		}
 		.foot-lnk{
@@ -186,7 +184,6 @@
 			<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab" style="font-size: 28px;">註冊</label>
 			
 			<div class="login-form" style="margin-top: 16px;">
-<!-- 				<form action="mem/mem.do"> -->
 				<div class="sign-in-htm">
 					<div class="group">
 						<label for="user" class="label" style="font-size: 20px;">帳號</label>
@@ -197,30 +194,20 @@
 						<input id="password" type="password" class="input" data-type="password" name="password" style="margin-top: 6px; font-size: 16px;">
 						<input id="texLogintPwd" type="text" class="input" name="texLogintPwd" style="margin-top: 6px; font-size: 16px;">
 					</div>
-					
-					<!--
-					<div class="group">
-						<input id="showPwd" type="checkbox" class="check">
-						<label for="check"><span class="icon"></span>顯示密碼</label>
-					</div>
-					-->
 					<div class="group" style="margin-bottom: 25px;">
 						<label for="check">
 							<input type="checkbox" name="showPwd" id="checkboxPwd">顯示密碼
 						</label>
-					</div>
-					
+					</div>					
 					<input type="hidden" name="DID" value="<%=request.getAttribute("DID") %>" id="DID">
 					<input type="hidden" name="action" value="getOne_For_Display">
-
 					<div class="group">
-						<button class="button" id="loginBtn" style="font-size: 16px; font-weight: bold;">登入</button>
+						<button class="button" id="loginBtn" style="font-size:16px; font-weight:bold;">登入</button>
 					</div>
-					<div class="hr" style="margin:50px 0 40px 0;"></div>
+					<div class="hr"></div>
 					<div class="foot-lnk">
 						<a href="#forgot">忘記密碼?</a>
 					</div>
-<!-- 				</form> -->
 				</div>
 				
 				
@@ -228,27 +215,27 @@
 				
 				<div class="sign-up-htm">
 					<div class="group">
-						<label for="user" class="label">帳號</label>
-						<input id="user" type="text" class="input">
+						<label for="user" class="label" style="font-size: 20px;">帳號</label>
+						<input id="registerUsername" type="text" class="input" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					<div class="group">
-						<label for="pass" class="label">Email</label>
-						<input id="pass" type="text" class="input">
+						<label for="pass" class="label" style="font-size: 20px;">Email</label>
+						<input id="registerEmail" type="text" class="input" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					<div class="group">
-						<label for="pass" class="label">再輸入一次Email</label>
-						<input id="pass" type="text" class="input">
+						<label for="pass" class="label" style="font-size: 20px;">再輸入一次Email</label>
+						<input id="checkRegisterEmail" type="text" class="input" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					<div class="group">
-						<label for="pass" class="label">密碼</label>
-						<input id="pass" type="password" class="input" data-type="password">
+						<label for="pass" class="label" style="font-size: 20px;">密碼</label>
+						<input id="registerPassword" type="password" class="input" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					<div class="group">
-						<label for="pass" class="label">再輸入一次密碼</label>
-						<input id="pass" type="password" class="input" data-type="password">
+						<label for="pass" class="label" style="font-size: 20px;">再輸入一次密碼</label>
+						<input id="checkRegisterPassword" type="password" class="input" style="margin-top: 6px; font-size: 16px;">
 					</div>
-					<div class="group">
-						<input type="submit" class="button" value="註冊">
+					<div class="group" style="margin-top: 24px;">
+						<button class="button" id="registerBtn" style="font-size:16px; font-weight:bold;">註冊</button>
 					</div>
 					<div class="hr"></div>
 					<div class="foot-lnk">
@@ -256,8 +243,7 @@
 					</div>
 				</div>				
 			</div>
-		</div>
-		
+		</div>		
 	</div>
 	
 	<script>
@@ -342,39 +328,46 @@
     });
 		
 		$("#loginBtn").click(function(){
-		
 			var state = loginValidate();
+			
 			if(state == 0){
+				var username = $("#username").val();
+				var password = $("#password").val();
+				var DID = $("#DID").val();
+				
 				$.ajax({
-				    type:"POST",
-				    url:"mem/mem.do",
-				    data:{
+				    type: 'POST',                     //GET or POST
+				    url: "mem/mem.do",            //請求的頁面
+				    cache: false,                    //防止抓到快取的回應
+				    data: {      											//要傳送到頁面的參數
 				    	username : username,
-				    	password : password,
-				    	DID : DID
+							password : password,
+							DID : DID
 				    },
-				    success:function (jsonObject) {
-				    	var state = jsonObject.state;
-				    	if(state == "1"){
-				    		window.location.href = "./AddValue/AddValue.jsp";
-				    	}else if(state == "2"){
-				    		$("#username").val("無此帳號!").css('color', 'red');
-				    	}else if(state == "3"){
-				    		$("#password").hide();
-								$("#texLogintPwd").val("密碼錯誤!").css('color', 'red').show();
-								document.getElementById('checkboxPwd').checked = true;
-				    	}
+				    success: function (jsonObject) {         //當請求成功後此事件會被呼叫
+				    	console.log("jsonObject.state : "+ jsonObject.state);
+				    	var validateState = jsonObject.state;
+				    	if(validateState == "1"){
+								window.location.href = "./AddValue/AddValue.jsp";
+							}else if(validateState == "2"){
+	 							$("#username").val("無此帳號!").css('color', 'red');
+		 					}else if(validateState == "3"){
+	 							$("#password").hide();
+	 							$("#texLogintPwd").val("密碼錯誤!").css('color', 'red').show();
+	 							document.getElementById('checkboxPwd').checked = true;
+	 						}
+				    },
+				    error: function(e){
+				    	console.log("e: " + e);
+				    },            //當請求失敗後此事件會被呼叫
+				    statusCode: {                     //狀態碼處理
+				      404: function() {
+				        //alert("page not found");
+				      }
 				    }
-					});
+				});
 			}
-			
-			
-
-			
-			
-			
-			
-			});
+		});
 
 
 	</script>

@@ -1,5 +1,15 @@
+<%@page import="com.mem.model.MemVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    
+<%
+	MemVO memVO = (MemVO) session.getAttribute("memVO");
+	System.out.println("Session username : " + memVO.getUsername());
+	Object DID = session.getAttribute("DID");
+	System.out.println("Session DID : " + DID.toString());
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,7 +137,24 @@
 		});
 		
 		$("#menuLogoutBtn").click(function(){
-			window.location.href = "../index.jsp";
+			$.ajax({
+			    type: 'POST',                     //GET or POST
+			    url: "../LogoutServlet",            //請求的頁面
+			    cache: false,                     //防止抓到快取的回應
+			    data: {},
+			    success: function (jsonObject) {         //當請求成功後此事件會被呼叫
+			    	window.location.href = "../index.jsp";
+			    },
+			    error: function(e){
+			    	console.log("e: " + e);
+			    },            //當請求失敗後此事件會被呼叫
+			    statusCode: {                     //狀態碼處理
+			      404: function() {
+			        alert("page not found");
+			      }
+			    }
+			});
+			
 		});
  
   </script>

@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.mem.model.MemDAO;
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
+
 @WebServlet(name = "MemServlet", urlPatterns = {"/MemServlet"})
 public class MemServlet extends HttpServlet {
 
@@ -29,18 +33,27 @@ public class MemServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		String DID = req.getParameter("DID");
-		
-		System.out.println("username : " + username);
-		System.out.println("password : " + password );
-		System.out.println("DID : " + DID );
 
+		MemService memService = new MemService();
+		MemVO memVO = memService.getOneMem(username);
+		
 		PrintWriter out = resp.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("state", "1");
+		
+		if(memVO == null) {
+			jsonObject.put("state", "2");
+		}else {
+			if(password.equals(memVO.getPassword())) {
+				jsonObject.put("state", "1");
+				req.getSession().setAttribute("memVO", memVO);
+				req.getSession().setAttribute("DID", DID);
+			}else {
+				jsonObject.put("state", "3");
+			}
+		}
+
 		out.write(jsonObject.toString());
 		out.flush();
 		out.close();
 	}
-
-	
 }

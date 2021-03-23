@@ -9,8 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
-   <resource-ref>
+  <resource-ref>
     <description>DB Connection</description>
     <res-ref-name>jdbc/threeinone</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
@@ -18,12 +17,13 @@
   </resource-ref>
   
   <servlet>
-		<servlet-name>MemServlet</servlet-name>
-		<servlet-class>com.mem.controller.MemServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MemServlet</servlet-name>
-		<url-pattern>/mem/mem.do</url-pattern>
-	</servlet-mapping>
-
+    <servlet-name>MemServlet</servlet-name>
+    <servlet-class>com.mem.controller.MemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemServlet</servlet-name>
+    <url-pattern>/mem/mem.do</url-pattern>
+  </servlet-mapping>
+ 
+  
 </web-app>
