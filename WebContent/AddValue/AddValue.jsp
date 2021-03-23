@@ -28,7 +28,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#AAAAAA !important;">
     <!-- .navbar-brand 左上LOGO位置 -->
     <a class="navbar-brand" href="#">
-      <img src="../images/icons8-menu.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+<!--       <img src="../images/icons8-menu.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
       <span class="h3 mx-1" style="font-weight:bold;">加值服務</span>
     </a>
     <!-- .navbar-toggler 漢堡式選單按鈕 -->
@@ -49,7 +49,10 @@
           <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">會員資料</a>
         </li>
 				<li class="nav-item">
-          <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">登出</a>
+					<button id="menuLogoutBtn" class="nav-link"
+						style="float:right; color: #FFFFFF; padding-top: 6px]; border: none;
+						background: none;">登出</button>
+<!--           <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">登出</a> -->
         </li>
     </div>
   </nav>
@@ -86,9 +89,9 @@
 		</div>
 		<div style="margin: 7% 0 0 0; text-align:center;">
 			<p style="margin: 0 0 0 0; font-size:16px;">已投入金額</p>
-			<p style="font-weight: bold; color: #FF993C; margin: 0 0 0 0;">元</p>
+			<p style="font-weight: bold; color: #FF993C; margin: 0 0 0 0;">0元</p>
 			<p style="margin: 6px 0 0 0;">加值點數為</p>
-			<p style="font-weight: bold; color: #FF993C;">點</p>
+			<p style="font-weight: bold; color: #FF993C;">0點</p>
 			<p style="margin: 0 0 0 0; font-size:16px;">系統將於以下時間結束後自動完成加值</p>
 			<p style="margin: 0 0 0 0; font-size:16px;">或請按完成，手動完成加值</p>
 			<p id="timer" style="color:red; font-weight:bold; font-size:18px;">30秒</p>
@@ -121,6 +124,10 @@
 			document.getElementById("timer").innerText = countStr;
 			clearInterval(myTimerVar);		
 			myTimerVar= setInterval(function(){ myTimer()}, 1000);
+		});
+		
+		$("#menuLogoutBtn").click(function(){
+			window.location.href = "../index.jsp";
 		});
  
   </script>

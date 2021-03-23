@@ -19,6 +19,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <title>三合一加值系統</title>
 	<link rel="shortcut icon" href="#" />
@@ -174,26 +175,27 @@
 			text-align:center;
 		}
 	</style>
-<!-- 	<script src="./js/jquery-3.2.1.js"></script> -->
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<!-- 	<script src="./js/nicescroll.js"></script> -->
+	<script src="./js/jquery-3.3.1.js"></script>
+	<script src="./js/nicescroll.js"></script>
 </head>
 
 <body id="body">
 	<div class="login-wrap">
 		<div class="login-html">
-			<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">登入</label>
-			<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">註冊</label>
+			<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab" style="font-size: 28px;">登入</label>
+			<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab" style="font-size: 28px;">註冊</label>
 			
-			<div class="login-form">
+			<div class="login-form" style="margin-top: 16px;">
+<!-- 				<form action="mem/mem.do"> -->
 				<div class="sign-in-htm">
 					<div class="group">
-						<label for="user" class="label">帳號</label>
-						<input id="username" type="text" class="input" name="username">
+						<label for="user" class="label" style="font-size: 20px;">帳號</label>
+						<input id="username" type="text" class="input" name="username" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					<div class="group">
-						<label for="pass" class="label">密碼</label>
-						<input id="password" type="password" class="input" data-type="password" name="password">
+						<label for="pass" class="label" style="font-size: 20px;">密碼</label>
+						<input id="password" type="password" class="input" data-type="password" name="password" style="margin-top: 6px; font-size: 16px;">
+						<input id="texLogintPwd" type="text" class="input" name="texLogintPwd" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					
 					<!--
@@ -202,9 +204,9 @@
 						<label for="check"><span class="icon"></span>顯示密碼</label>
 					</div>
 					-->
-					<div class="group">
+					<div class="group" style="margin-bottom: 25px;">
 						<label for="check">
-							<input type="checkbox" name="showPwd" id="showPwd">顯示密碼
+							<input type="checkbox" name="showPwd" id="checkboxPwd">顯示密碼
 						</label>
 					</div>
 					
@@ -212,13 +214,16 @@
 					<input type="hidden" name="action" value="getOne_For_Display">
 
 					<div class="group">
-						<button class="button" id="loginBtn">登入</button>
+						<button class="button" id="loginBtn" style="font-size: 16px; font-weight: bold;">登入</button>
 					</div>
-					<div class="hr"></div>
+					<div class="hr" style="margin:50px 0 40px 0;"></div>
 					<div class="foot-lnk">
 						<a href="#forgot">忘記密碼?</a>
 					</div>
+<!-- 				</form> -->
 				</div>
+				
+				
 				
 				
 				<div class="sign-up-htm">
@@ -256,45 +261,119 @@
 	</div>
 	
 	<script>
-// 		$("#body").niceScroll({
-//         cursorcolor: "#0026BF",
-//         cursorborder: "1px solid #30BAFF", 
-//         autohidemode: "hidden",
-//         cursorwidth: "10px"
-//     });
+		//初始化各元素
+		$(function(){
+			$("#texLogintPwd").hide();
+			document.getElementById('checkboxPwd').checked = false;
+			document.getElementById("password").value = "";
+			document.getElementById("texLogintPwd").value = "";
+			$("#username").val("").css('color', '#aaa');
+			$("#password").val("").css('color', '#aaa');
+			$("#texLogintPwd").val("").css('color', '#aaa');
+		});
+		
+		//確認帳號和密碼是否為空白,再提交後台驗證
+		function loginValidate(){
+			var state = 0;
+			var username = $("#username").val();
+			var password = $("#password").val();
+			if(username == null || username == ""){
+				$("#username").val("帳號不能為空白!").css('color', 'red');
+				state = 1;
+			}
+			if(password == null || password == ""){
+				$("#password").hide();
+				$("#texLogintPwd").val("密碼不能為空白!").css('color', 'red').show();
+				document.getElementById('checkboxPwd').checked = true;
+				state = 1;
+			}			
+			return state;
+		}
+
+		//是否切換顯示密碼
+		document.getElementById('checkboxPwd').onclick = function() {
+			var password = document.getElementById("password");
+			var texLogintPwd = document.getElementById("texLogintPwd");
+			var checked = this.checked;
+			if(checked == true){
+				texLogintPwd.style.display = "block";
+				password.style.display = "none";
+				texLogintPwd.value = password.value;
+			}else if(checked == false){
+				texLogintPwd.style.display = "none";
+				password.style.display = "block";
+				password.value = texLogintPwd.value;
+			}
+			console.log("password : " + password.value + " ; texLogintPwd : " + texLogintPwd.value);
+		};
+		
+		//如果先前驗證沒過,清除警示文字和恢復樣式
+		document.getElementById('password').onblur = function() {
+			document.getElementById('texLogintPwd').value = this.value;
+			console.log("password : " + password.value + " ; texLogintPwd : " + texLogintPwd.value);
+		}
+		
+		//如果先前驗證沒過,清除警示文字和恢復樣式
+		document.getElementById('texLogintPwd').onblur = function() {
+			document.getElementById('password').value = this.value;
+			console.log("password : " + password.value + " ; texLogintPwd : " + texLogintPwd.value);
+		}
+		
+		//輸入前清空文字和恢復樣式
+		document.getElementById('username').onfocus = function() {
+			if(this.style.color == "red"){
+				this.value = "";
+				this.style.color = "#DDDDDD";
+			}
+		}		
+		document.getElementById('texLogintPwd').onfocus = function() {
+			if(this.style.color == "red"){
+				this.value = "";
+				this.style.color = "#DDDDDD";
+			}
+		}
+
+		//隠藏右側scrollbar
+		$("#body").niceScroll({
+        cursorcolor: "#0026BF",
+        cursorborder: "1px solid #30BAFF", 
+        autohidemode: "hidden",
+        cursorwidth: "10px"
+    });
 		
 		$("#loginBtn").click(function(){
-			var username = $("#username").val(); //獲取input裡的值
-			var password = $("#password").val();
-			var DID = $("#DID").val();
+		
+			var state = loginValidate();
+			if(state == 0){
+				$.ajax({
+				    type:"POST",
+				    url:"mem/mem.do",
+				    data:{
+				    	username : username,
+				    	password : password,
+				    	DID : DID
+				    },
+				    success:function (jsonObject) {
+				    	var state = jsonObject.state;
+				    	if(state == "1"){
+				    		window.location.href = "./AddValue/AddValue.jsp";
+				    	}else if(state == "2"){
+				    		$("#username").val("無此帳號!").css('color', 'red');
+				    	}else if(state == "3"){
+				    		$("#password").hide();
+								$("#texLogintPwd").val("密碼錯誤!").css('color', 'red').show();
+								document.getElementById('checkboxPwd').checked = true;
+				    	}
+				    }
+					});
+			}
 			
-			console.log("username : " + username);
-			console.log("password : " + password);
-			console.log("DID : " + DID);
 			
-			$.ajax({
-			    type:"POST",
-			    url:"/3in1/mem/mem.do",
-			    data:{
-			    	username : username,
-			    	password : password,
-			    	DID : DID
-			    },
-			    success:function (result) {
-			    	console.log("result : " + result);
-			        if("OK"==result){
-			        		console.log("登入成功！");
-			            window.location.href = "./AddValue/AddValue.jsp";
-			        }else{
-			        		console.log("使用者名稱或密碼錯誤");
-			            //$("#password").val("");  //將密碼input清空
-			            //$("#password").focus();  //將游標定位到密碼input
-			        }
-			    },
-			    error:function (err) {
-			        //alert("系統錯誤-loginPage.jsp-ajax");
-			    }
-				});
+
+			
+			
+			
+			
 			});
 
 

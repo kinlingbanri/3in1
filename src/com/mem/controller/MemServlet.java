@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
+@WebServlet(name = "MemServlet", urlPatterns = {"/MemServlet"})
 public class MemServlet extends HttpServlet {
 
 	@Override
@@ -18,7 +22,9 @@ public class MemServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
+		//resp.setContentType("text/html;charset=UTF-8");
+		//resp.setContentType("text/plain");
+		resp.setContentType("application/json");
 		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
@@ -27,13 +33,13 @@ public class MemServlet extends HttpServlet {
 		System.out.println("username : " + username);
 		System.out.println("password : " + password );
 		System.out.println("DID : " + DID );
-		
+
 		PrintWriter out = resp.getWriter();
-		out.print("OK");
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("state", "1");
+		out.write(jsonObject.toString());
 		out.flush();
 		out.close();
-		//out.close();
-		//req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 
 	
