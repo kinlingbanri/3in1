@@ -6,9 +6,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <%
+		
 		String DID = request.getParameter("DID");
-		System.out.println("DID : " + DID);
-		request.setAttribute("DID", DID);
+		if(session.getAttribute("DID") != null){
+			DID =  session.getAttribute("DID").toString();
+			System.out.println("Session DID : " + DID);
+		}
+		
     MemService memSvc = new MemService();
 		List<MemVO> list = memSvc.getAll();
 %>    
@@ -173,8 +177,15 @@
 			text-align:center;
 		}
 	</style>
+	
+<!-- 	<link rel="./js/sweetalert2.scss" /> -->
 	<script src="./js/jquery-3.3.1.js"></script>
 	<script src="./js/nicescroll.js"></script>
+	
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!-- 	<script src="./js/sweetalert-test.js"></script> -->
+<!-- 	<script src="./js/sweetalert2.js"></script> -->
 </head>
 
 <body id="body">
@@ -186,7 +197,7 @@
 			<div class="login-form" style="margin-top: 16px;">
 				<div class="sign-in-htm">
 					<div class="group">
-						<label for="user" class="label" style="font-size: 20px;">帳號</label>
+						<label for="user" class="label" style="font-size: 20px; ">帳號</label>
 						<input id="username" type="text" class="input" name="username" style="margin-top: 6px; font-size: 16px;">
 					</div>
 					<div class="group">
@@ -203,6 +214,7 @@
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<div class="group">
 						<button class="button" id="loginBtn" style="font-size:16px; font-weight:bold;">登入</button>
+<!-- 						<button class="button" id="testBtn" style="font-size:16px; font-weight:bold;">Test</button> -->
 					</div>
 					<div class="hr"></div>
 					<div class="foot-lnk">
@@ -247,6 +259,26 @@
 	</div>
 	
 	<script>
+	$("#testBtn").click(function(){
+		swal.fire({
+		    title: '註冊成功！',
+		    text: '3秒後自動關閉!',
+		    timer: 3000
+		}).then(
+		    function () {
+		    	// handling the promise rejection
+		    	window.location.href = "../3in1/index.jsp";
+		    },		    	
+		    function (dismiss) {
+		        if (dismiss === 'timer') {
+		            console.log('I was closed by the timer')
+		        }
+		    }
+			)
+	});
+	
+	var DID = $("#DID").val();
+	
 		//初始化各元素
 		$(function(){
 			$("#texLogintPwd").hide();
@@ -280,6 +312,22 @@
 				state = 1;
 			}			
 			return state;
+		}
+		
+		//驗證EAMIL格式
+		function emailValidate(){
+			var registerEmail = $("#registerEmail").val();
+			var mailformat = /^[^\[\]\(\)\\<>:;,@.]+[^\[\]\(\)\\<>:;,@]*@[a-z0-9A-Z]+(([.]?[a-z0-9A-Z]+)*[-]*)*[.]([a-z0-9A-Z]+[-]*)+$/g;
+			if(registerEmail == null || registerEmail == ""){
+				$("#registerEmail").val("Email不能為空白!").css('color', 'red').show();
+			}else if(!registerEmail.match(mailformat)){
+				$("#registerEmail").val("Email格式錯誤!").css('color', 'red').show();
+			}
+		}
+		
+		//驗證帳號是否重覆
+		function checkRepeatUsername(){
+			
 		}
 
 		//是否切換顯示密碼
@@ -412,16 +460,18 @@
 				passwordState = 1;
 			}
 			if(emailState == 0){
-				var mailformat = /^[^\[\]\(\)\\<>:;,@.]+[^\[\]\(\)\\<>:;,@]*@[a-z0-9A-Z]+(([.]?[a-z0-9A-Z]+)*[-]*)*[.]([a-z0-9A-Z]+[-]*)+$/g;
-				if(!registerEmail.match(mailformat)){
-					$("#registerEmail").val("Email格式錯誤!").css('color', 'red').show();
-				}else if($("#registerEmail").val() != $("#checkRegisterEmail").val()){
+				emailValidate();				
+			}
+			if(emailState == 0){
+				if($("#registerEmail").val() != $("#checkRegisterEmail").val()){
 					$("#checkRegisterEmail").val("Email不一致!").css('color', 'red').show();
+					state = 1;
 				}
 			}
 			if(passwordState == 0){
 				if($("#registerPassword").val() != $("#checkRegisterPassword").val()){
-					$("#checkRegisterPassword").val("Email不一致!").css('color', 'red').show();
+					$("#checkRegisterPassword").val("密碼不一致!").css('color', 'red').show();
+					state = 1;
 				}
 			}
 			
@@ -463,9 +513,60 @@
 		
 		//如果先前驗證沒過,清除警示文字和恢復樣式
 		document.getElementById('registerUsername').onblur = function() {
-			document.getElementById('texLogintPwd').value = this.value;
-			console.log("password : " + password.value + " ; texLogintPwd : " + texLogintPwd.value);
+			var registerUsername = $("#registerUsername").val();
+			
+			if(registerUsername == null || registerUsername == ""){
+				$("#registerUsername").val("帳號不能為空白!").css('color', 'red');
+			}else if(registerUsername == "此帳號已註冊!"){
+				
+			}else {
+
+				var RegisterState = 1;
+				
+				$.ajax({
+				    type: 'POST',                     //GET or POST
+				    url: "./RegisterServlet",            //請求的頁面
+				    cache: false,                     //防止抓到快取的回應
+				    data: {
+				    	RegisterState:RegisterState,
+				    	registerUsername:registerUsername,
+				    	DID : DID
+				    },
+				    success: function (jsonObject) {         //當請求成功後此事件會被呼叫
+				    	var state = jsonObject.state;
+							console.log("state : " + state);
+				    	if(state == "repeat"){
+				    		$("#registerUsername").val("此帳號已註冊!").css('color', 'red');
+				    	}else if(state == "register"){
+				    		//alert("註冊成功!");
+				    		//window.location.href = "../index.jsp";
+				    	}			    	
+				    },
+				    error: function(e){
+				    	console.log("e: " + e);
+				    },            //當請求失敗後此事件會被呼叫
+				    statusCode: {                     //狀態碼處理
+				      404: function() {
+				        alert("page not found");
+				      }
+				    }
+				});
+			}			
 		}
+		
+		
+		//先行驗證email格式
+		document.getElementById('registerEmail').onblur = function() {
+			emailValidate();
+		}
+		
+// 		//輸入前清空文字和恢復樣式
+// 		document.getElementById('username').onfocus = function() {
+// 			if(this.style.color == "red"){
+// 				this.value = "";
+// 				this.style.color = "#DDDDDD";
+// 			}
+// 		}
 		
 		$("#registerBtn").click(function(){
 			var state = registerValidate();
@@ -476,37 +577,59 @@
 				var registerPassword = $("#registerPassword").val();
 				var DID = $("#DID").val();
 				
-// 				$.ajax({
-// 				    type: 'POST',                     //GET or POST
-// 				    url: "mem/mem.do",            //請求的頁面
-// 				    cache: false,                    //防止抓到快取的回應
-// 				    data: {      											//要傳送到頁面的參數
-// 				    	username : username,
-// 							password : password,
-// 							DID : DID
-// 				    },
-// 				    success: function (jsonObject) {         //當請求成功後此事件會被呼叫
-// 				    	console.log("jsonObject.state : "+ jsonObject.state);
-// 				    	var validateState = jsonObject.state;
-// 				    	if(validateState == "1"){
-// 								window.location.href = "./AddValue/AddValue.jsp";
-// 							}else if(validateState == "2"){
-// 	 							$("#username").val("無此帳號!").css('color', 'red');
-// 		 					}else if(validateState == "3"){
-// 	 							$("#password").hide();
-// 	 							$("#texLogintPwd").val("密碼錯誤!").css('color', 'red').show();
-// 	 							document.getElementById('checkboxPwd').checked = true;
-// 	 						}
-// 				    },
-// 				    error: function(e){
-// 				    	console.log("e: " + e);
-// 				    },            //當請求失敗後此事件會被呼叫
-// 				    statusCode: {                     //狀態碼處理
-// 				      404: function() {
-// 				        //alert("page not found");
-// 				      }
-// 				    }
-// 				});
+				var registerUsername = $("#registerUsername").val();
+				
+				if(registerUsername == null || registerUsername == ""){
+					$("#registerUsername").val("帳號不能為空白!").css('color', 'red');
+				}else if(registerUsername == "此帳號已註冊!"){
+					
+				}else {
+
+					var RegisterState = 2;
+					
+					$.ajax({
+					    type: 'POST',                     //GET or POST
+					    url: "./RegisterServlet",            //請求的頁面
+					    cache: false,                     //防止抓到快取的回應
+					    data: {
+					    	RegisterState:RegisterState,
+					    	registerUsername:registerUsername,
+					    	DID : DID
+					    },
+					    success: function (jsonObject) {         //當請求成功後此事件會被呼叫
+					    	var state = jsonObject.state;
+								console.log("state : " + state);
+					    	if(state == "repeat"){
+					    		$("#registerUsername").val("此帳號已註冊!").css('color', 'red');
+					    	}else if(state == "register"){
+					    		console.log("註冊成功!");
+					    		swal.fire({
+					    		    title: '註冊成功！',
+					    		    text: '3秒後自動關閉!',
+					    		    timer: 3000
+					    		}).then(
+					    		    function () {
+					    		    	// handling the promise rejection
+					    		    	window.location.href = "../3in1/index.jsp";
+					    		    },		    	
+					    		    function (dismiss) {
+					    		        if (dismiss === 'timer') {
+					    		            console.log('I was closed by the timer')
+					    		        }
+					    		    }
+					    			)
+					    	}			    	
+					    },
+					    error: function(e){
+					    	console.log("e: " + e);
+					    },            //當請求失敗後此事件會被呼叫
+					    statusCode: {                     //狀態碼處理
+					      404: function() {
+					        alert("page not found");
+					      }
+					    }
+					});
+				}
 			}
 		});
 

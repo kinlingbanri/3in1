@@ -153,9 +153,8 @@
 			        alert("page not found");
 			      }
 			    }
+				});
 			});
-			
-		});
  
   </script>
 </body>
