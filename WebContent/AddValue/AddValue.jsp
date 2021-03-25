@@ -28,6 +28,7 @@
 	
 	<script src="../js/jquery-3.3.1.js"></script>
 	<script src="../js/bootstrap-4.0.0/bootstrap.js"></script>
+	<script src="../js/nicescroll.js"></script>
 </head>
 
 <body style="font-family: Microsoft JhengHei; background-image: url('../images/bg_bggenerator_com.png');">
@@ -114,6 +115,14 @@
   
   
   <script>
+  
+		//隠藏右側scrollbar
+		$("#body").niceScroll({
+		  cursorcolor: "#0026BF",
+		  cursorborder: "1px solid #30BAFF", 
+		  autohidemode: "hidden",
+		  cursorwidth: "10px"
+		});
 
 		var count = 30;
 		var myTimerVar= setInterval(function(){ myTimer()}, 1000);
