@@ -1,15 +1,28 @@
 package com.mem.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "mem")
 public class MemVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Column(name = "email")
 	private String email;
+	
+	@Id
+	@Column(name = "username")
 	private String username;
+	
+	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "point")
 	private Integer point;
-	
-	
 	
 	public MemVO() {
 		super();
@@ -23,6 +36,7 @@ public class MemVO implements java.io.Serializable {
 		this.point = point;
 	}
 	
+
 	public String getEmail() {
 		return email;
 	}

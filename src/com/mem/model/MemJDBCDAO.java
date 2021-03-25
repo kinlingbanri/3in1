@@ -18,6 +18,8 @@ public class MemJDBCDAO implements MemDAO_interface {
 			"SELECT username, email, password, point FROM mem order by username";
 	private static final String GET_ONE_STMT = 
 			"SELECT username, email, password, point FROM mem where username = ?";
+	private static final String GET_ONEEMAIL_STMT = 
+			"SELECT username, email, password, point FROM mem where email = ?";
 	private static final String INSERT_STMT = 
 			"INSERT INTO mem (username, email, password, point) VALUES (?, ?, ?, ?)";
 	private static final String UPDATE = 
@@ -219,6 +221,71 @@ public class MemJDBCDAO implements MemDAO_interface {
 		return memVO;
 	}
 	
+
+	@Override
+	public List<MemVO> findByEmail(String email) {
+		List<MemVO> list = new ArrayList<MemVO>();
+		MemVO memVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONEEMAIL_STMT);
+			
+			pstmt.setString(1, email);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// memVO 也稱為 Domain objects
+				memVO = new MemVO();
+				memVO.setUsername(rs.getString("username"));
+				memVO.setEmail(rs.getString("email"));
+				memVO.setPassword(rs.getString("password"));
+				memVO.setPoint(rs.getInt("point"));
+				list.add(memVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	@Override
 	public List<MemVO> getAll() {
 		List<MemVO> list = new ArrayList<MemVO>();
@@ -318,17 +385,25 @@ public class MemJDBCDAO implements MemDAO_interface {
 		System.out.println();
 		*/
 		
-		
-		// Query All
-		List<MemVO> list = dao.getAll();
+		// Query Email All
+		List<MemVO> list = dao.findByEmail("Van@tongya.com.tw");
 		for (MemVO mem : list) {
 			System.out.print(mem.getUsername() + ",");
 			System.out.print(mem.getEmail() + ",");
 			System.out.print(mem.getPassword() + ",");
 			System.out.print(mem.getPoint());
 			System.out.println();
-		}
+		}	
 		
+//		// Query All
+//		List<MemVO> list = dao.getAll();
+//		for (MemVO mem : list) {
+//			System.out.print(mem.getUsername() + ",");
+//			System.out.print(mem.getEmail() + ",");
+//			System.out.print(mem.getPassword() + ",");
+//			System.out.print(mem.getPoint());
+//			System.out.println();
+//		}		
 	}
 
 }

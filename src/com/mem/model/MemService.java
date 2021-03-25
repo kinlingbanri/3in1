@@ -47,6 +47,10 @@ public class MemService {
 		return dao.findByPrimaryKey(username);
 	}
 	
+	public List<MemVO> getMemEmail(String email){
+		return dao.findByEmail(email);
+	}
+	
 	public List<MemVO>getAll(){
 		return dao.getAll();
 	}

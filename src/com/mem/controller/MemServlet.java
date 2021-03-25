@@ -34,6 +34,11 @@ public class MemServlet extends HttpServlet {
 		String password = req.getParameter("password");
 		String DID = req.getParameter("DID");
 
+		System.out.println("memservlet req DID : " + DID);
+		
+		String sessionDID = req.getSession().getAttribute("DID").toString();
+		System.out.println("memservlet session DID : " + sessionDID);
+		
 		MemService memService = new MemService();
 		MemVO memVO = memService.getOneMem(username);
 		
@@ -46,7 +51,6 @@ public class MemServlet extends HttpServlet {
 			if(password.equals(memVO.getPassword())) {
 				jsonObject.put("state", "1");
 				req.getSession().setAttribute("memVO", memVO);
-				req.getSession().setAttribute("DID", DID);
 			}else {
 				jsonObject.put("state", "3");
 			}

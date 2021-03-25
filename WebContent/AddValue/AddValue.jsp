@@ -8,6 +8,7 @@
 	System.out.println("Session username : " + memVO.getUsername());
 	Object DID = session.getAttribute("DID");
 	System.out.println("Session DID : " + DID.toString());
+	System.out.println("AddValue.jsp");
 %>
 
 <!DOCTYPE html>
@@ -29,13 +30,13 @@
 	<script src="../js/bootstrap-4.0.0/bootstrap.js"></script>
 </head>
 
-<body style="font-family: Microsoft JhengHei;">
+<body style="font-family: Microsoft JhengHei; background-image: url('../images/bg_bggenerator_com.png');">
   
   <!-- .navbar-expand-{sm|md|lg|xl}決定在哪個斷點以上就出現漢堡式選單 -->
   <!-- navbar-dark 文字顏色 .bg-dark 背景顏色 -->
   <!-- .navbar-expand-{sm|md|lg|xl}決定在哪個斷點以上就出現漢堡式選單 -->
   <!-- navbar-dark 文字顏色 .bg-dark 背景顏色 -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#AAAAAA !important;">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#91989F  !important;">
     <!-- .navbar-brand 左上LOGO位置 -->
     <a class="navbar-brand" href="#">
 <!--       <img src="../images/icons8-menu.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
@@ -67,12 +68,12 @@
     </div>
   </nav>
   
-  <section>
+  <section style="height: 1080px;">
 		<div style="text-align: center;">
 			<h2>
 				中山店加值機1號
 			</h2>
-			<h4 style="font-size:20px; color:#DDDDDD;">
+			<h4 style="font-size:20px; color:RED;font-weight: bold;">
 				優惠價
 			</h4>
 		</div>
@@ -82,26 +83,26 @@
 					<tr>
 						<td style="text-align: right;">200元</td>
 						<td style="text-align: center;">-&gt;&nbsp;</td>
-						<td style="text-align: left; color:aqua;">220點</td>
+						<td style="text-align: left; color:#FF993C;">220點</td>
 					</tr>
 					<tr>
 						<td style="text-align: right;">500元</td>
 						<td style="text-align: center;">-&gt;&nbsp;<br></td>
-						<td style="text-align: left; color:aqua;">600點<br></td>
+						<td style="text-align: left; color:#FF993C;">600點<br></td>
 					</tr>
 					<tr>
 						<td style="text-align: right;">1000元</td>
 						<td style="text-align: center;">-&gt;&nbsp;</td>
-						<td style="text-align: left; color:aqua;">1300點</td>
+						<td style="text-align: left; color:#FF993C;">1300點</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<div style="margin: 7% 0 0 0; text-align:center;">
 			<p style="margin: 0 0 0 0; font-size:16px;">已投入金額</p>
-			<p style="font-weight: bold; color: #FF993C; margin: 0 0 0 0;">0元</p>
+			<p style="font-weight: bold; color: #FF993C; margin: 0 0 0 0; font-size: 20px;">0元</p>
 			<p style="margin: 6px 0 0 0;">加值點數為</p>
-			<p style="font-weight: bold; color: #FF993C;">0點</p>
+			<p style="font-weight: bold; color: #FF993C; font-size: 20px;">0點</p>
 			<p style="margin: 0 0 0 0; font-size:16px;">系統將於以下時間結束後自動完成加值</p>
 			<p style="margin: 0 0 0 0; font-size:16px;">或請按完成，手動完成加值</p>
 			<p id="timer" style="color:red; font-weight:bold; font-size:18px;">30秒</p>

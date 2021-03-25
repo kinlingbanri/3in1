@@ -6,12 +6,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <%
+		String reqDID = request.getParameter("DID");			
 		
-		String DID = request.getParameter("DID");
-		if(session.getAttribute("DID") != null){
-			DID =  session.getAttribute("DID").toString();
-			System.out.println("Session DID : " + DID);
+		if((reqDID != null)){
+			session.setAttribute("DID", reqDID);
 		}
+		System.out.println("session DID : " + session.getAttribute("DID"));
 		
     MemService memSvc = new MemService();
 		List<MemVO> list = memSvc.getAll();
@@ -183,9 +183,9 @@
 	<script src="./js/nicescroll.js"></script>
 	
 	
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
 <!-- 	<script src="./js/sweetalert-test.js"></script> -->
-<!-- 	<script src="./js/sweetalert2.js"></script> -->
+	<script src="./js/sweetalert2.js"></script>
 </head>
 
 <body id="body">
@@ -218,7 +218,7 @@
 					</div>
 					<div class="hr"></div>
 					<div class="foot-lnk">
-						<a href="#forgot">忘記密碼?</a>
+						<a href="./forgetPassword.jsp">忘記密碼?</a>
 					</div>
 				</div>
 				
@@ -267,7 +267,7 @@
 		}).then(
 		    function () {
 		    	// handling the promise rejection
-		    	window.location.href = "../3in1/index.jsp";
+		    	//window.location.href = "../3in1/index.jsp";
 		    },		    	
 		    function (dismiss) {
 		        if (dismiss === 'timer') {
@@ -594,6 +594,8 @@
 					    data: {
 					    	RegisterState:RegisterState,
 					    	registerUsername:registerUsername,
+					    	registerEmail:registerEmail,
+					    	registerPassword:registerPassword,
 					    	DID : DID
 					    },
 					    success: function (jsonObject) {         //當請求成功後此事件會被呼叫
