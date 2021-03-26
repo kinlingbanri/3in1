@@ -58,7 +58,7 @@
           <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">交易紀錄<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">會員資料</a>
+          <a class="nav-link" href="./Modify.jsp" style="text-align: right; color: #FFFFFF;">會員資料</a>
         </li>
 				<li class="nav-item">
 					<button id="menuLogoutBtn" class="nav-link"
@@ -138,12 +138,16 @@
 			}
 		}
 		
-		$("#logoutBtn").click(function(){
+		function resetTimer(){
 			count = 30;
 			var countStr = count + "秒";
 			document.getElementById("timer").innerText = countStr;
 			clearInterval(myTimerVar);		
 			myTimerVar= setInterval(function(){ myTimer()}, 1000);
+		}
+		
+		$("#logoutBtn").click(function(){
+			window.location.href = "../logout.jsp";
 		});
 		
 		$("#menuLogoutBtn").click(function(){
