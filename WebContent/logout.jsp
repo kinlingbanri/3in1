@@ -2,16 +2,23 @@
     pageEncoding="UTF-8"%>
     
 <%
-System.out.println("Logout.jsp");
-Object object = session.getAttribute("DID");
-String DID = object.toString();
-System.out.println("session DID : " +DID );
-String returnURL = "0;url=index.jsp?DID=" + DID; 
+	Object object = session.getAttribute("DID");
+	String DID = object.toString();
+	System.out.println("Logout.jsp session DID : " +DID );
 
-	//跳躍到登入畫面
-	response.setHeader("refresh", returnURL);
 	//清除session資料
 	session.invalidate();
+	//跳躍到登入畫面
+	String returnURL = "0;url=index.jsp?DID=" + DID;
+	response.setHeader("refresh", returnURL);
+
+	
+	
+// 	session.invalidate();
+// 	request.getSession();
+// 	session.setAttribute("DID", DID);
+// 	String url = "index.jsp?DID=" + DID;
+// 	response.sendRedirect(url);
 %>
     
 <!DOCTYPE html>

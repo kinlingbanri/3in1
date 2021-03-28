@@ -211,15 +211,16 @@
       <ul class="navbar-nav mr-auto">
         <!-- active表示當前頁面 -->
         <li class="nav-item active">
-          <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">交易紀錄<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="./Record.jsp" style="text-align: right; color: #FFFFFF;">交易紀錄<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">會員資料</a>
         </li>
 				<li class="nav-item">
-					<button id="menuLogoutBtn" class="nav-link"
-						style="float:right; color: #FFFFFF; padding-top: 6px]; border: none;
-						background: none;">登出</button>
+					<a class="nav-link" href="../logout.jsp" style="text-align: right; color: #FFFFFF;">登出</a>
+<!-- 					<button id="menuLogoutBtn" class="nav-link" -->
+<!-- 						style="float:right; color: #FFFFFF; padding-top: 6px]; border: none; -->
+<!-- 						background: none;">登出</button> -->
         </li>
     </div>
   </nav>
@@ -230,23 +231,23 @@
   	<input type="hidden" name="memVOEmail" value="<%=email %>" id="memVOEmail">
   	<input type="hidden" name="memVOPassword" value="<%=password %>" id="memVOPassword">
 
-		<div class="login-wrap">
+		<div class="login-wrap" style="box-shadow: none;">
 			<div class="login-html" style="background: none;">
-				<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab" style="font-size: 28px;">修改密碼</label>
-				<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab" style="font-size: 28px;">修改Email</label>
+				<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab" style="font-size: 20px; font-weight:bold;">修改密碼</label>
+				<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab" style="font-size: 20px; font-weight:bold;">修改Email</label>
 				<div class="login-form" style="margin-top: 16px;">
 					<!-- Login form -->
 					<div class="sign-in-htm">
 						<div class="group">
-							<label for="user" class="label" style="font-size: 20px; ">原密碼</label>
+							<label for="user" class="label" style="font-size: 18px; ">原密碼</label>
 							<input id="password" type="text" class="input" name="password" style="margin-top: 6px; font-size: 16px;">
 						</div>
 						<div class="group">
-							<label for="pass" class="label" style="font-size: 20px;">新密碼</label>
+							<label for="pass" class="label" style="font-size: 18px;">新密碼</label>
 							<input id="newPassword" type="text" class="input" name="newPassword" style="margin-top: 6px; font-size: 16px;">
 						</div>
 						<div class="group">
-							<label for="pass" class="label" style="font-size: 20px;">再輸一次新密碼</label>
+							<label for="pass" class="label" style="font-size: 18px;">再輸一次新密碼</label>
 							<input id="checkNewPassword" type="text" class="input" name="checkNewPassword" style="margin-top: 6px; font-size: 16px;">
 						</div>
 						<div class="group" style="margin-top: 48px;">
@@ -528,14 +529,7 @@
 		$("#backBtn2").click(function(){
 			window.location.href = "./Modify.jsp";
 		});
-		
-		$("#backBtn1").click(function(){
-			window.location.href = "./Modify.jsp";
-		});
 
-		$("#menuLogoutBtn").click(function(){
-			window.location.href = "../logout.jsp";
-		});
 		
 		$("#testBtn").click(function(){
 			console.log(username + ";" + email + ";" + password);

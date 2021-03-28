@@ -55,17 +55,17 @@
       <ul class="navbar-nav mr-auto">
         <!-- active表示當前頁面 -->
         <li class="nav-item active">
-          <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">交易紀錄<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="./Record.jsp" style="text-align: right; color: #FFFFFF;">交易紀錄<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="./Modify.jsp" style="text-align: right; color: #FFFFFF;">會員資料</a>
         </li>
 				<li class="nav-item">
-					<button id="menuLogoutBtn" class="nav-link"
-						style="float:right; color: #FFFFFF; padding-top: 6px]; border: none;
-						background: none;">登出</button>
-<!--           <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">登出</a> -->
-        </li>
+					<a class="nav-link" href="../logout.jsp" style="text-align: right; color: #FFFFFF;">登出</a>
+<!-- 					<button id="menuLogoutBtn" class="nav-link" -->
+<!-- 						style="float:right; color: #FFFFFF; padding-top: 6px]; border: none; -->
+<!-- 	 						background: none;">登出</button> -->
+<!--         </li> -->
     </div>
   </nav>
   
@@ -145,30 +145,13 @@
 			clearInterval(myTimerVar);		
 			myTimerVar= setInterval(function(){ myTimer()}, 1000);
 		}
-		
-		$("#logoutBtn").click(function(){
+
+		document.getElementById('logoutBtn').onclick = function(){
 			window.location.href = "../logout.jsp";
-		});
-		
-		$("#menuLogoutBtn").click(function(){
-			$.ajax({
-			    type: 'POST',                     //GET or POST
-			    url: "../LogoutServlet",            //請求的頁面
-			    cache: false,                     //防止抓到快取的回應
-			    data: {},
-			    success: function (jsonObject) {         //當請求成功後此事件會被呼叫
-			    	window.location.href = "../index.jsp";
-			    },
-			    error: function(e){
-			    	console.log("e: " + e);
-			    },            //當請求失敗後此事件會被呼叫
-			    statusCode: {                     //狀態碼處理
-			      404: function() {
-			        alert("page not found");
-			      }
-			    }
-				});
-			});
+		}
+// 		document.getElementById('menuLogoutBtn').onclick = function(){
+// 			window.location.href = "../logout.jsp";
+// 		}
  
   </script>
 </body>
