@@ -8,7 +8,7 @@
 	System.out.println("Session username : " + memVO.getUsername());
 	Object DID = session.getAttribute("DID");
 	System.out.println("Session DID : " + DID.toString());
-	System.out.println("AddValue.jsp");
+	System.out.println("SingleConsumption.jsp");
 %>
 
 <!DOCTYPE html>
@@ -41,7 +41,7 @@
     <!-- .navbar-brand 左上LOGO位置 -->
     <a class="navbar-brand" href="#">
 <!--       <img src="../images/icons8-menu.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
-      <span class="h3 mx-1" style="font-weight:bold;">加值服務</span>
+      <span class="h3 mx-1" style="font-weight:bold;">消費服務</span>
     </a>
     <!-- .navbar-toggler 漢堡式選單按鈕 -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,44 +72,19 @@
   
   <section style="height: 1080px;">
 		<div style="text-align: center;">
-			<h2>
-				中山店加值機1號
+			<h2 id="storeInfo">
+				中山店洗衣機1號
 			</h2>
-			<h4 style="font-size:20px; color:RED;font-weight: bold;">
-				優惠價
-			</h4>
 		</div>
-		<div>
-			<table style="width:100%; border:none;">
-				<tbody>
-					<tr>
-						<td style="text-align: right;">200元</td>
-						<td style="text-align: center;">-&gt;&nbsp;</td>
-						<td style="text-align: left; color:#FF993C;">220點</td>
-					</tr>
-					<tr>
-						<td style="text-align: right;">500元</td>
-						<td style="text-align: center;">-&gt;&nbsp;<br></td>
-						<td style="text-align: left; color:#FF993C;">600點<br></td>
-					</tr>
-					<tr>
-						<td style="text-align: right;">1000元</td>
-						<td style="text-align: center;">-&gt;&nbsp;</td>
-						<td style="text-align: left; color:#FF993C;">1300點</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+
 		<div style="margin: 7% 0 0 0; text-align:center;">
-			<p style="margin: 0 0 0 0; font-size:16px;">已投入金額</p>
-			<p style="font-weight: bold; color: #FF993C; margin: 0 0 0 0; font-size: 20px;">0元</p>
-			<p style="margin: 6px 0 0 0;">加值點數為</p>
-			<p style="font-weight: bold; color: #FF993C; font-size: 20px;">0點</p>
-			<p style="margin: 0 0 0 0; font-size:16px;">系統將於以下時間結束後自動完成加值</p>
-			<p style="margin: 0 0 0 0; font-size:16px;">或請按完成，手動完成加值</p>
+			<p style="margin: 0 0 0 0; font-size:16px;">本次消費需</p>
+			<p style="font-weight: bold; color: #FF993C; margin: 0 0 0 0; font-size: 20px; margin-bottom: 36px;">點</p>
+			<p style="margin: 0 0 0 0; font-size:16px;">系統將於以下時間結束後自動完成服務</p>
+			<p style="margin: 0 0 0 0; font-size:16px;">或請按完成，手動完成服務</p>
 			<p id="timer" style="color:red; font-weight:bold; font-size:18px;">30秒</p>
 			<button class="btn btn-outline-success" style="font-weight:bold;" id="logoutBtn">
-				登出
+				完成
 			</button>
 		</div>
   </section><!-- End Section -->  

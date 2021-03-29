@@ -218,10 +218,8 @@
         </li>
 				<li class="nav-item">
 					<a class="nav-link" href="../logout.jsp" style="text-align: right; color: #FFFFFF;">登出</a>
-<!-- 					<button id="menuLogoutBtn" class="nav-link" -->
-<!-- 						style="float:right; color: #FFFFFF; padding-top: 6px]; border: none; -->
-<!-- 						background: none;">登出</button> -->
-        </li>
+				</li>
+			</ul>        
     </div>
   </nav>
   

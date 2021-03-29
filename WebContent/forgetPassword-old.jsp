@@ -199,12 +199,12 @@
 					<input type="hidden" name="DID" value="<%=request.getAttribute("DID") %>" id="DID">
 					<div class="group" style="margin-top: 48px;">
 						<button class="button" id="sendPasswordBtn" style="font-size:16px; font-weight:bold; width:45%; float:left;">確認</button>
-						<button class="button" id="CancelBtn" style="font-size:16px; font-weight:bold; width:45%; float:right; background-color: #D26900;"">取消</button>
+						<button class="button" id="CancelBtn" style="font-size:16px; font-weight:bold; width:45%; float:right; background-color: #D26900;">取消</button>
 					</div>
 				</div>
-		</div>		
+			</div>		
+		</div>
 	</div>
-	
 	<script>
 	
 		var DID = $("#DID").val();

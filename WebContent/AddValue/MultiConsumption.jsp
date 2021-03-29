@@ -1,14 +1,13 @@
 <%@page import="com.mem.model.MemVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    
+
 <%
 	MemVO memVO = (MemVO) session.getAttribute("memVO");
 	System.out.println("Session username : " + memVO.getUsername());
 	Object DID = session.getAttribute("DID");
 	System.out.println("Session DID : " + DID.toString());
-	System.out.println("AddValue.jsp");
+	System.out.println("MultiConsumption.jsp");
 %>
 
 <!DOCTYPE html>
