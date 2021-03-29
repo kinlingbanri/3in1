@@ -21,7 +21,7 @@
 	String username = memVO.getUsername();
 	String email = memVO.getEmail();
 	String password = memVO.getPassword();
-	
+	System.out.println("Record.jsp !");
 %>
 
 <!DOCTYPE html>
@@ -197,7 +197,7 @@
     <!-- .navbar-brand 左上LOGO位置 -->
     <a class="navbar-brand" href="#">
 <!--       <img src="../images/icons8-menu.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
-      <span class="h3 mx-1" style="font-weight:bold;">加值服務</span>
+      <span class="h3 mx-1" style="font-weight:bold;">交易紀錄</span>
     </a>
     <!-- .navbar-toggler 漢堡式選單按鈕 -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -229,9 +229,9 @@
   	<input type="hidden" name="memVOEmail" value="<%=email %>" id="memVOEmail">
   	<input type="hidden" name="memVOPassword" value="<%=password %>" id="memVOPassword">
 
-		<div>
-			現有點數 1200點
-			<button class="btn btn-outline-warning">Button</button>
+		<div style="margin:6px 0 8px 0;">
+			<p style="float:left; margin: 2px 0 0 10px; font-weight:bold; font-size:20px; color:#ffa500;">現有點數 1200點</p>
+			<button class="btn btn-outline-warning" style="float:right; margin:0 4px 4px 0; font-weight:bold;" id="returnBtn">上一頁</button>
 		</div>
 
 		<table class="table">
@@ -440,13 +440,14 @@
 		  cursorwidth: "10px"
 		});
 		
-
+		$("#returnBtn").click(function(){
+			history.back();
+		});
 		
 		var memVOUsername = $("#memVOUsername").val();
 		var memVOEmail = $("#memVOEmail").val();
 		var memVOPassword = $("#memVOPassword").val();
-		console.log("Modify.jsp : " + memVOUsername + ";" + memVOEmail + ";" + memVOPassword);
-
+		console.log("Record.jsp : " + memVOUsername + ";" + memVOEmail + ";" + memVOPassword);
 
   </script>
 </body>
