@@ -11,7 +11,7 @@
 		if((reqDID != null)){
 			session.setAttribute("DID", reqDID);
 		}
-		System.out.println("session DID : " + session.getAttribute("DID"));
+		System.out.println("index.jsp session DID : " + session.getAttribute("DID"));
 		
     MemService memSvc = new MemService();
 		List<MemVO> list = memSvc.getAll();
@@ -264,6 +264,8 @@
     cursorwidth: "10px"
 	});
 	
+	console.log("Into index.jsp!!!");
+	
 	//初始化各元素
 	$(function(){
 		$("#texLogintPwd").hide();
@@ -434,6 +436,7 @@
 			  	console.log("jsonObject.state : "+ jsonObject.state);
 			  	var validateState = jsonObject.state;
 			  	if(validateState == "1"){
+			  		console.log("Login success!");
 						window.location.href = "./AddValue/AddValue.jsp";
 					}else if(validateState == "2"){
  						$("#username").val("無此帳號!").css('color', 'red');

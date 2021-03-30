@@ -7,8 +7,7 @@
 	MemVO memVO = (MemVO) session.getAttribute("memVO");
 	System.out.println("Session username : " + memVO.getUsername());
 	Object DID = session.getAttribute("DID");
-	System.out.println("Session DID : " + DID.toString());
-	System.out.println("AddValue.jsp");
+	System.out.println("AddValue.jspSession DID : " + DID.toString());
 %>
 
 <!DOCTYPE html>
@@ -55,7 +54,10 @@
       <ul class="navbar-nav mr-auto">
         <!-- active表示當前頁面 -->
         <li class="nav-item active">
-          <a class="nav-link" href="./Record.jsp" style="text-align: right; color: #FFFFFF;">交易紀錄<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">加值服務<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./Record.jsp" style="text-align: right; color: #FFFFFF;">交易紀錄</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="./Modify.jsp" style="text-align: right; color: #FFFFFF;">會員資料</a>
@@ -127,6 +129,7 @@
 
 		var count = 30;
 		var myTimerVar= setInterval(function(){ myTimer()}, 1000);
+		console.log("Into AddValue.jsp");
 		
 		function myTimer(){
 			if(count == 0){

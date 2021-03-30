@@ -1,16 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.mem.model.MemService"%>
+<%@page import="com.mem.model.MemVO"%>
     
 <%
 	Object object = session.getAttribute("DID");
-	String DID = object.toString();
-	System.out.println("Logout.jsp session DID : " +DID );
+	if(object != null){
+		String DID = object.toString();
+		System.out.println("Logout.jsp session DID : " +DID );
 
-	//清除session資料
-	session.invalidate();
-	//跳躍到登入畫面
-	String returnURL = "0;url=index.jsp?DID=" + DID;
-	response.setHeader("refresh", returnURL);
+		//清除session資料
+		session.invalidate();
+		
+		request.getSession().setAttribute("DID", DID);
+		//跳躍到登入畫面
+		String returnURL = "0;url=index.jsp?DID=" + DID;
+		response.setHeader("refresh", returnURL);
+	}
+
 
 	
 	

@@ -197,7 +197,7 @@
     <!-- .navbar-brand 左上LOGO位置 -->
     <a class="navbar-brand" href="#">
 <!--       <img src="../images/icons8-menu.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
-      <span class="h3 mx-1" style="font-weight:bold;">加值服務</span>
+      <span class="h3 mx-1" style="font-weight:bold;">會員資料</span>
     </a>
     <!-- .navbar-toggler 漢堡式選單按鈕 -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -211,7 +211,10 @@
       <ul class="navbar-nav mr-auto">
         <!-- active表示當前頁面 -->
         <li class="nav-item active">
-          <a class="nav-link" href="./Record.jsp" style="text-align: right; color: #FFFFFF;">交易紀錄<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="./AddValue.jsp" style="text-align: right; color: #FFFFFF;">加值服務<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./Record.jsp" style="text-align: right; color: #FFFFFF;">交易紀錄</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">會員資料</a>
@@ -524,11 +527,11 @@
 		});
 		
 		$("#backBtn1").click(function(){
-			window.location.href = "./Modify.jsp";
+			window.location.href = "./AddValue.jsp";
 		});
 
 		$("#backBtn2").click(function(){
-			window.location.href = "./Modify.jsp";
+			window.location.href = "./AddValue.jsp";
 		});
 
 		

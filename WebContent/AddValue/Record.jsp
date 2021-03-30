@@ -211,7 +211,10 @@
       <ul class="navbar-nav mr-auto">
         <!-- active表示當前頁面 -->
         <li class="nav-item active">
-          <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">交易紀錄<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="./AddValue.jsp" style="text-align: right; color: #FFFFFF;">加值服務<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="text-align: right; color: #FFFFFF;">交易紀錄</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="./Modify.jsp" style="text-align: right; color: #FFFFFF;">會員資料</a>
@@ -231,7 +234,7 @@
 
 		<div style="margin:6px 0 8px 0;">
 			<p style="float:left; margin: 2px 0 0 10px; font-weight:bold; font-size:20px; color:#ffa500;">現有點數 1200點</p>
-			<button class="btn btn-outline-warning" style="float:right; margin:0 4px 4px 0; font-weight:bold;" id="returnBtn">上一頁</button>
+			<button class="btn btn-outline-warning" style="float:right; margin:0 4px 4px 0; font-weight:bold;" id="returnBtn">返回</button>
 		</div>
 
 		<table class="table">
@@ -441,7 +444,7 @@
 		});
 		
 		$("#returnBtn").click(function(){
-			history.back();
+			window.location.href = "./AddValue.jsp";
 		});
 		
 		var memVOUsername = $("#memVOUsername").val();
