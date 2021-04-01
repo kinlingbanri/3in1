@@ -24,20 +24,13 @@
     <url-pattern>/mem/mem.do</url-pattern>
   </servlet-mapping>
 
+
 <!-- 		<context-param> -->
-<!--         <param-name>AttendSocetListener</param-name> -->
-<!--         <param-value>/attendSocetListener</param-value> -->
+<!--         <param-name>ChatServerListener</param-name> -->
+<!--         <param-value>/ChatServerListener</param-value> -->
 <!--     </context-param> -->
 <!--     <listener> -->
-<!--         <listener-class>utils.controller.AttendSocetListener</listener-class> -->
+<!--         <listener-class>utils.nettytest.ChatServerListener</listener-class> -->
 <!--     </listener>	 -->
-
-		<context-param>
-        <param-name>ChatServerListener</param-name>
-        <param-value>/ChatServerListener</param-value>
-    </context-param>
-    <listener>
-        <listener-class>utils.nettytest.ChatServerListener</listener-class>
-    </listener>	
 
 	</web-app>

@@ -1,4 +1,4 @@
-package utils.nettytest;
+package utils.netty;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

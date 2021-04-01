@@ -1,4 +1,4 @@
-package utils.Netty2;
+package utils.nettytest;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

@@ -1,4 +1,4 @@
-package utils.Netty2;
+package utils.nettytest;
 
 import java.util.Scanner;
 

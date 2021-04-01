@@ -1,4 +1,4 @@
-package utils.nettylistenerthread;
+package utils.netty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,15 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
 		System.out.println("Server received - " + msg);
+		
+		char[] chars = msg.toCharArray();
+	    StringBuffer hex = new StringBuffer();
+	    for (int i = 0; i < chars.length; i++)
+	    {
+	        hex.append(Integer.toHexString((int) chars[i]));
+	    }
+	    System.out.println("ascii to Hex : " + hex.toString());
+		
 		for (Channel c : channels) {
 			c.writeAndFlush("-> " + msg + '\n');
 		}

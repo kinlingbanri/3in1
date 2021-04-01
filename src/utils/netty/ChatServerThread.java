@@ -1,4 +1,4 @@
-package utils.Netty2;
+package utils.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -11,11 +11,10 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
-public class ChatServer {
+public class ChatServerThread extends Thread{
 
-	static final int PORT = 6000;
-	
-	public static void main(String[] args)  throws Exception {
+	@Override
+	public void run() {
 		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
  
@@ -41,11 +40,14 @@ public class ChatServer {
 					});
  
 			// Start the server.
-			ChannelFuture f = b.bind(PORT).sync();
+			ChannelFuture f = b.bind(6000).sync();
 			System.out.println("Chat Server started. Ready to accept chat clients.");
  
 			// Wait until the server socket is closed.
 			f.channel().closeFuture().sync();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			// Shut down all event loops to terminate all threads.
 			bossGroup.shutdownGracefully();
